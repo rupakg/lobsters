@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 20140804005415) do
     t.string   "site_url",   limit: 512
     t.text     "content",    limit: 16777215
     t.text     "tags"
-    t.string   "uuid",       limit: 200
+    t.string   "uuid",       limit: 191
   end
 
   add_index "weblogs", ["user_id", "uuid"], name: "user_and_uuid", unique: true, using: :btree

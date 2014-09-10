@@ -9,13 +9,12 @@ class AddWeblogs < ActiveRecord::Migration
       t.string :site_url, :limit => 512
       t.text :content, :limit => 16777215 # mediumtext
       t.text :tags
-      t.string :uuid
+      t.string :uuid, limit: 191
     end
 
     # why can't the charset be specified in the create_table?
-    execute("ALTER TABLE weblogs MODIFY `uuid` varchar(200) CHARACTER SET utf8")
+    execute("ALTER TABLE weblogs MODIFY `uuid` varchar(191) CHARACTER SET utf8")
 
-    add_index "weblogs", ["user_id", "uuid"], :name => "user_and_uuid",
-      :unique => true
+    add_index "weblogs", ["user_id", "uuid"], :name => "user_and_uuid", :unique => true
   end
 end
