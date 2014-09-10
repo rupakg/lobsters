@@ -43,7 +43,7 @@ end
 # config/initializers/production.rb
 class << Rails.application
   def domain
-    "dockste.rs"
+    "localhost:4000"
   end
 
   def name
