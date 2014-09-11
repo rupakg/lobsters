@@ -36,6 +36,9 @@ gem "mail"
 gem "feed-normalizer"
 gem "loofah"
 
+# JS runtime
+gem "therubyracer"
+
 group :test, :development do
   gem 'dotenv-rails'
   gem "rspec-rails", "~> 2.6"
