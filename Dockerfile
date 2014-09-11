@@ -12,4 +12,4 @@ CMD export RAILS_ENV=production && \
   bundle exec rake db:create && \
   bundle exec rake db:schema:load && \
   bundle exec rake db:seed && \
-  bundle exec rails s -e production
+  bundle exec rails s -p 4000 -e production
