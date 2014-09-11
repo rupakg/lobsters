@@ -81,7 +81,7 @@ end
 
 class << Rails.application
   def domain
-    ENV['APP_DOMAIN']
+    "localhost:4000"
   end
 
   def name
