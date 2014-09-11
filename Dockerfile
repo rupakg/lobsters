@@ -7,7 +7,6 @@ RUN apt-get update && \
 ADD . /tmp
 WORKDIR /tmp
 RUN bundle install --without development test
-RUN export SECRET_KEY_BASE=`rake secret`
 
 CMD export RAILS_ENV=production && \
   bundle exec rake db:create && \
