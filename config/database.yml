@@ -2,8 +2,8 @@ defaults: &defaults
   adapter: mysql2
   encoding: utf8mb4
   reconnect: false
-  host: <%= ENV['DB_HOST'] %>
-  port: <%= ENV['DB_PORT'] %>
+  host: <%= ENV['MYSQL_PORT_3306_TCP_ADDR'] %>
+  port: <%= ENV['MYSQL_PORT_3306_TCP_PORT'] %>
   database: <%= ENV['DB_NAME'] %>
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
