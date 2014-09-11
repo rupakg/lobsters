@@ -37,7 +37,7 @@ gem "feed-normalizer"
 gem "loofah"
 
 # JS runtime
-# gem "therubyracer"
+gem "execjs"
 
 group :test, :development do
   gem 'dotenv-rails'

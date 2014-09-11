@@ -156,6 +156,7 @@ DEPENDENCIES
   dotenv-rails
   dynamic_form
   exception_notification
+  execjs
   faker
   feed-normalizer
   htmlentities
