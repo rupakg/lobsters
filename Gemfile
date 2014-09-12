@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "rails", "4.1.1"
 
 gem "unicorn"
+gem "unicorn-rails"
 
 gem "mysql2", ">= 0.3.14"
 
@@ -35,6 +36,9 @@ gem "mail"
 # for planet rss aggregation
 gem "feed-normalizer"
 gem "loofah"
+
+# JS Runtime
+gem 'therubyracer', '0.12.1', platforms: :ruby
 
 group :test, :development do
   gem 'dotenv-rails'
