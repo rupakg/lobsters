@@ -2,7 +2,7 @@ FROM centurylink/ruby-base:2.1.2
 MAINTAINER CenturyLink
 
 RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y libmysql-ruby libmysqlclient-dev libsqlite3-dev
+  DEBIAN_FRONTEND=noninteractive apt-get install -y libmysql-ruby libmysqlclient-dev nodejs
 
 ADD . /tmp
 WORKDIR /tmp

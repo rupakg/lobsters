@@ -20,7 +20,7 @@ gem "dynamic_form"
 
 gem "exception_notification"
 
-gem "bcrypt-ruby", "~> 3.1.2"
+gem "bcrypt", "~> 3.1.2"
 
 gem "nokogiri", "= 1.6.1"
 gem "htmlentities"
@@ -35,9 +35,6 @@ gem "mail"
 # for planet rss aggregation
 gem "feed-normalizer"
 gem "loofah"
-
-# JS runtime
-gem "execjs"
 
 group :test, :development do
   gem 'dotenv-rails'
