@@ -2,8 +2,8 @@ Lobsters::Application.routes.draw do
   constraints(:subdomain => "planet") do
     root :to => "weblogs#index",
       :subdomain => "planet",
-      :as => "weblogs_root",
-      :protocol => (Rails.env == "production" ? "https://" : "http://")
+      :as => "weblogs_root"
+      # :protocol => (Rails.env == "production" ? "https://" : "http://")
 
     get "/page/:page" => "weblogs#index"
   end
@@ -11,7 +11,7 @@ Lobsters::Application.routes.draw do
   constraints do
     scope :format => "html" do
       root :to => "home#index",
-        :protocol => (Rails.env == "production" ? "https://" : "http://"),
+        # :protocol => (Rails.env == "production" ? "https://" : "http://"),
         :as => "root"
 
       get "/rss" => "home#index", :format => "rss"
