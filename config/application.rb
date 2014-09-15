@@ -43,7 +43,7 @@ end
 # config/initializers/production.rb
 class << Rails.application
   def domain
-    "localhost:4000"
+    "#{ENV['APP_DOMAIN']}" #"localhost:4000"
   end
 
   def name
