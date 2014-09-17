@@ -13,5 +13,5 @@ CMD export RAILS_ENV=production && \
   bundle exec rake db:create && \
   bundle exec rake db:schema:load && \
   bundle exec rake db:seed && \
-  bundle exec rake ts:rebuild && \
+  bundle exec INDEX_ONLY=true rake ts:index && \
   bundle exec rails s -p 4000 -e production

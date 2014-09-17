@@ -8,5 +8,6 @@ production:
   address: <%= ENV['SPHINX_PORT_9306_TCP_ADDR'] %>
   mysql41: <%= ENV['SPHINX_PORT_9306_TCP_PORT'] %>
   configuration_file: <%= ENV['SPHINX_FILE_LOCATION'] %>/sphinx.conf
+  indices_location: <%= ENV['SPHINX_FILE_LOCATION'] %>
   min_infix_len: 2
 
