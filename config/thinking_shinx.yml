@@ -1,7 +1,12 @@
-production:
-  address: <%= ENV['SPHINX_PORT_9313_TCP_ADDR'] %>
-  mysql41: <%= ENV['SPHINX_PORT_9313_TCP_PORT'] %>
+development:
+  address: <%= ENV['SPHINX_HOST_ADDR'] %>
+  mysql41: <%= ENV['SPHINX_HOST_PORT'] %>
+  configuration_file: <%= ENV['SPHINX_CONF_LOCATION'] %>
   min_infix_len: 2
 
-development:
+production:
+  address: <%= ENV['SPHINX_PORT_9306_TCP_ADDR'] %>
+  mysql41: <%= ENV['SPHINX_PORT_9306_TCP_PORT'] %>
+  configuration_file: <%= ENV['SPHINX_CONF_LOCATION'] %>
   min_infix_len: 2
+
