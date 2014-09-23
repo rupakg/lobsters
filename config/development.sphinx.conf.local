@@ -5,21 +5,21 @@ indexer
 
 searchd
 {
-  listen = 9306:mysql41
-  log = /var/log/sphinx/development.searchd.log
-  query_log = /var/log/sphinx/development.searchd.query.log
-  pid_file = /var/log/sphinx/development.sphinx.pid
+  listen = 172.12.8.155:9306:mysql41
+  log = /Users/rganguly/Projects/Wheels/lobsterapp/lobsters/log/development.searchd.log
+  query_log = /Users/rganguly/Projects/Wheels/lobsterapp/lobsters/log/development.searchd.query.log
+  pid_file = /Users/rganguly/Projects/Wheels/lobsterapp/lobsters/log/development.sphinx.pid
   workers = threads
-  #binlog_path = /tmp/binlog/development
+  binlog_path = /Users/rganguly/Projects/Wheels/lobsterapp/lobsters/tmp/binlog/development
 }
 
 source comment_core_0
 {
   type = mysql
-  sql_host = 172.12.8.152
+  sql_host = 172.12.8.155
   sql_user = root
   sql_pass = 
-  sql_db = docksters_dev
+  sql_db = docksters_pro
   sql_port = 3306
   sql_query_pre = SET TIME_ZONE = '+0:00'
   sql_query = SELECT SQL_NO_CACHE `comments`.`id` * 4 + 0 AS `id`, comments.`comment` AS `comment`, users.`username` AS `author`, comments.`id` AS `sphinx_internal_id`, 'Comment' AS `sphinx_internal_class`, 0 AS `sphinx_deleted`, (cast(upvotes as unsigned) - cast(downvotes as unsigned)) AS `score`, comments.`is_deleted` AS `is_deleted`, UNIX_TIMESTAMP(comments.`created_at`) AS `created_at` FROM `comments` LEFT OUTER JOIN `users` ON `users`.`id` = `comments`.`user_id` WHERE (`comments`.`id` BETWEEN $start AND $end AND `comments`.`is_deleted` = 0 AND `comments`.`is_moderated` = 0) GROUP BY `comments`.`id`, comments.`comment`, users.`username`, comments.`id`, comments.`is_deleted`, comments.`created_at`  ORDER BY NULL
@@ -36,7 +36,7 @@ source comment_core_0
 index comment_core
 {
   type = plain
-  path = /var/idx/sphinx/comment_core
+  path = /Users/rganguly/Projects/Wheels/lobsterapp/lobsters/db/sphinx/development/comment_core
   docinfo = extern
   charset_type = utf-8
   min_infix_len = 2
@@ -46,10 +46,10 @@ index comment_core
 source story_core_0
 {
   type = mysql
-  sql_host = 172.12.8.152
+  sql_host = 172.12.8.155
   sql_user = root
   sql_pass = 
-  sql_db = docksters_dev
+  sql_db = docksters_pro
   sql_port = 3306
   sql_query_pre = SET TIME_ZONE = '+0:00'
   sql_query = SELECT SQL_NO_CACHE `stories`.`id` * 4 + 1 AS `id`, stories.`url` AS `url`, stories.`title` AS `title`, stories.`description` AS `description`, users.`username` AS `author`, GROUP_CONCAT(DISTINCT tags.`tag` SEPARATOR ' ') AS `tags`, stories.`id` AS `sphinx_internal_id`, 'Story' AS `sphinx_internal_class`, 0 AS `sphinx_deleted`, UNIX_TIMESTAMP(stories.`created_at`) AS `created_at`, stories.`hotness` AS `hotness`, stories.`is_expired` AS `is_expired`, (cast(upvotes as unsigned) - cast(downvotes as unsigned)) AS `score` FROM `stories` LEFT OUTER JOIN `users` ON `users`.`id` = `stories`.`user_id` LEFT OUTER JOIN `taggings` ON `taggings`.`story_id` = `stories`.`id` LEFT OUTER JOIN `tags` ON `tags`.`id` = `taggings`.`tag_id` WHERE (`stories`.`id` BETWEEN $start AND $end AND `stories`.`is_expired` = 0) GROUP BY `stories`.`id`, stories.`url`, stories.`title`, stories.`description`, users.`username`, stories.`id`, stories.`created_at`, stories.`hotness`, stories.`is_expired`  ORDER BY NULL
@@ -67,7 +67,7 @@ source story_core_0
 index story_core
 {
   type = plain
-  path = /var/idx/sphinx/story_core
+  path = /Users/rganguly/Projects/Wheels/lobsterapp/lobsters/db/sphinx/development/story_core
   docinfo = extern
   charset_type = utf-8
   min_infix_len = 2

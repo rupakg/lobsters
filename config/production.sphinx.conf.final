@@ -5,22 +5,22 @@ indexer
 
 searchd
 {
-  listen = 9306:mysql41
-  log = /var/log/sphinx/development.searchd.log
-  query_log = /var/log/sphinx/development.searchd.query.log
-  pid_file = /var/log/sphinx/development.sphinx.pid
+  listen = $SPHINX_PORT_9306_TCP_ADDR:$SPHINX_PORT_9306_TCP_PORT:mysql41
+  log = $SPHINX_FILE_LOCATION/production.searchd.log
+  query_log = $SPHINX_FILE_LOCATION/production.searchd.query.log
+  pid_file = $SPHINX_FILE_LOCATION/production.sphinx.pid
   workers = threads
-  #binlog_path = /tmp/binlog/development
+  #binlog_path = $SPHINX_FILE_LOCATION/production
 }
 
 source comment_core_0
 {
   type = mysql
-  sql_host = 172.12.8.152
-  sql_user = root
-  sql_pass = 
-  sql_db = docksters_dev
-  sql_port = 3306
+  sql_host = $MYSQL_PORT_3306_TCP_ADDR
+  sql_user = $DB_USER
+  sql_pass = $DB_PASSWORD
+  sql_db = $DB_NAME_pro
+  sql_port = $MYSQL_PORT_3306_TCP_PORT
   sql_query_pre = SET TIME_ZONE = '+0:00'
   sql_query = SELECT SQL_NO_CACHE `comments`.`id` * 4 + 0 AS `id`, comments.`comment` AS `comment`, users.`username` AS `author`, comments.`id` AS `sphinx_internal_id`, 'Comment' AS `sphinx_internal_class`, 0 AS `sphinx_deleted`, (cast(upvotes as unsigned) - cast(downvotes as unsigned)) AS `score`, comments.`is_deleted` AS `is_deleted`, UNIX_TIMESTAMP(comments.`created_at`) AS `created_at` FROM `comments` LEFT OUTER JOIN `users` ON `users`.`id` = `comments`.`user_id` WHERE (`comments`.`id` BETWEEN $start AND $end AND `comments`.`is_deleted` = 0 AND `comments`.`is_moderated` = 0) GROUP BY `comments`.`id`, comments.`comment`, users.`username`, comments.`id`, comments.`is_deleted`, comments.`created_at`  ORDER BY NULL
   sql_query_range = SELECT IFNULL(MIN(`comments`.`id`), 1), IFNULL(MAX(`comments`.`id`), 1) FROM `comments`
@@ -36,21 +36,20 @@ source comment_core_0
 index comment_core
 {
   type = plain
-  path = /var/idx/sphinx/comment_core
+  path = $SPHINX_FILE_LOCATION/comment_core
   docinfo = extern
   charset_type = utf-8
-  min_infix_len = 2
   source = comment_core_0
 }
 
 source story_core_0
 {
   type = mysql
-  sql_host = 172.12.8.152
-  sql_user = root
-  sql_pass = 
-  sql_db = docksters_dev
-  sql_port = 3306
+  sql_host = $MYSQL_PORT_3306_TCP_ADDR
+  sql_user = $DB_USER
+  sql_pass = $DB_PASSWORD
+  sql_db = $DB_NAME_pro
+  sql_port = $MYSQL_PORT_3306_TCP_PORT
   sql_query_pre = SET TIME_ZONE = '+0:00'
   sql_query = SELECT SQL_NO_CACHE `stories`.`id` * 4 + 1 AS `id`, stories.`url` AS `url`, stories.`title` AS `title`, stories.`description` AS `description`, users.`username` AS `author`, GROUP_CONCAT(DISTINCT tags.`tag` SEPARATOR ' ') AS `tags`, stories.`id` AS `sphinx_internal_id`, 'Story' AS `sphinx_internal_class`, 0 AS `sphinx_deleted`, UNIX_TIMESTAMP(stories.`created_at`) AS `created_at`, stories.`hotness` AS `hotness`, stories.`is_expired` AS `is_expired`, (cast(upvotes as unsigned) - cast(downvotes as unsigned)) AS `score` FROM `stories` LEFT OUTER JOIN `users` ON `users`.`id` = `stories`.`user_id` LEFT OUTER JOIN `taggings` ON `taggings`.`story_id` = `stories`.`id` LEFT OUTER JOIN `tags` ON `tags`.`id` = `taggings`.`tag_id` WHERE (`stories`.`id` BETWEEN $start AND $end AND `stories`.`is_expired` = 0) GROUP BY `stories`.`id`, stories.`url`, stories.`title`, stories.`description`, users.`username`, stories.`id`, stories.`created_at`, stories.`hotness`, stories.`is_expired`  ORDER BY NULL
   sql_query_range = SELECT IFNULL(MIN(`stories`.`id`), 1), IFNULL(MAX(`stories`.`id`), 1) FROM `stories`
@@ -67,10 +66,9 @@ source story_core_0
 index story_core
 {
   type = plain
-  path = /var/idx/sphinx/story_core
+  path = $SPHINX_FILE_LOCATION/story_core
   docinfo = extern
   charset_type = utf-8
-  min_infix_len = 2
   source = story_core_0
 }
 
